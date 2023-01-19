@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player2 : MonoBehaviour
 {
     [SerializeField]
     private int distance = 1;
@@ -25,14 +25,11 @@ public class Player : MonoBehaviour
         a += Time.deltaTime;
         float zPosition = distance * Mathf.Sin(a);
         float xPosition = distance * Mathf.Cos(a);
-        transform.localPosition = Vector3.Lerp(GameManager.Instance.TargetTransform.localPosition, new Vector3(xPosition, 0, zPosition), 0.5f);
+        float yPosition = distance * Mathf.Sin(a);
+        transform.localPosition = GameManager.Instance.TargetTransform.localPosition + new Vector3(xPosition, yPosition, zPosition);
        
         float angle = GameManager.Instance.GetTargetAngle(transform.localPosition);
-        Debug.Log("angle : " + angle);
-
-        if (angle < 90 && angle > -90)
-        {
-            tailTransform.LookAt(GameManager.Instance.TargetTransform);
-        }
+        //Debug.Log("angle : " + angle);
+        tailTransform.LookAt(GameManager.Instance.TargetTransform);
     }
 }

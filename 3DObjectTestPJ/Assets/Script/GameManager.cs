@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform playerTransform;
 
+    float a = 1;
+
     private void Awake()
     {
         Instance = this;
@@ -24,14 +26,17 @@ public class GameManager : MonoBehaviour
         Instance = null;        
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-
+        a += Time.deltaTime/3;
+        float zPosition = 4 * Mathf.Sin(a);
+        float xPosition = 4 * Mathf.Cos(a);
+        targetTransform.localPosition = new Vector3(-xPosition, 0, -zPosition);
     }
 
-    public float GetTargetAngle()
+    public float GetTargetAngle(Vector3 localPosition)
     {
-        Vector3 v = targetTransform.position - playerTransform.position;
+        Vector3 v = targetTransform.localPosition - localPosition;
  
         return Mathf.Atan2(v.z, v.x) * Mathf.Rad2Deg;
     }
